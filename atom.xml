@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-08-11T15:29:11.000Z</updated>
+  <updated>2016-08-13T13:54:20.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,78 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>随机采样方法</title>
+    <link href="http://yoursite.com/2016/08/13/%E9%9A%8F%E6%9C%BA%E9%87%87%E6%A0%B7%E6%96%B9%E6%B3%95/"/>
+    <id>http://yoursite.com/2016/08/13/随机采样方法/</id>
+    <published>2016-08-13T14:00:00.000Z</published>
+    <updated>2016-08-13T13:54:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>关于机器学习中的一些采样方法<br><a id="more"></a></p>
+<h2 id="随机采样（Sampling）"><a href="#随机采样（Sampling）" class="headerlink" title="随机采样（Sampling）"></a>随机采样（Sampling）</h2><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+
+<p>对于均匀分布的数据是很容易采样的，计算机中利用同余发生器能较好的产生均匀分布的伪随机数。</p>
+<p>假设随机变量z~uniform(0,1),随机变量y与z有函数关系y=f(z),那么y的概率密度函数p(y)可由p(z)及f得到：</p>
+<p>$$p(y)=p(z)|\frac{dz}{dy}|$$</p>
+<p>$$z=h(y)=\int_{-\infty}^{y}{p(\widehat{y})d\widehat{y}}$$</p>
+<p><strong>比如：</strong>\(y=-\lambda^{-1}ln(1-z)\),则y~exp(\(\lambda\))。所以，假如需要采样某个指数分布，则可以通过采样（0，1）均匀分布，然后利用函数关系式的到对应指数分布的采样。</p>
+<p>[<strong>Box-Muller 变换</strong>]如果 \(U_1,U_2\)~Uniform(0,1),且独立，对于\(Z_0,Z_1\)若满足</p>
+<p>$$Z_{0}=\sqrt{-2ln(U_1)}cos(2\pi U_2)$$</p>
+<p>$$Z_{1}=\sqrt{-2ln(U_1)}sin(2\pi U_2)$$</p>
+<p>则\(Z_0,Z_1\)～N(0,1)</p>
+<p>PS：<font color="red">任意一个分布，其累积概率密度函数服从（0，1）均匀分布</font></p>
+<p><strong>对于大部分已知常见的分布基本都有相应的变换方式可以获取，但是对于某些未知的分布则需要采用特殊的采样方式。</strong></p>
+<h3 id="一、拒绝采样（Reject-sampling）"><a href="#一、拒绝采样（Reject-sampling）" class="headerlink" title="一、拒绝采样（Reject sampling）"></a>一、拒绝采样（Reject sampling）</h3><p><img src="./mdJPG/reject_sampling.png" alt="reject_sampling"></p>
+<p>高维情况下，拒绝采样会遇到两个问题：其一是q分布的确定，其二是k的合理选择，这两个问题会导致拒绝很高，无用计算很多。</p>
+<h3 id="二、重要性采样（Importance-sampling）"><a href="#二、重要性采样（Importance-sampling）" class="headerlink" title="二、重要性采样（Importance sampling）"></a>二、重要性采样（Importance sampling）</h3><h3 id="三、MCMC采样（Markov-Chain-Monte-Carlo）"><a href="#三、MCMC采样（Markov-Chain-Monte-Carlo）" class="headerlink" title="三、MCMC采样（Markov Chain Monte Carlo）"></a>三、MCMC采样（Markov Chain Monte Carlo）</h3><h3 id="四、Gibbs采样"><a href="#四、Gibbs采样" class="headerlink" title="四、Gibbs采样"></a>四、Gibbs采样</h3><h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h3><ul>
+<li>《PRML》</li>
+<li><a href="http://mp.weixin.qq.com/s?__biz=MzA5ODUxOTA5Mg==&amp;mid=2652549929&amp;idx=1&amp;sn=b774997faf139ddba296cdc1cb171d81&amp;scene=2&amp;srcid=0812Gcot4umIh53aGHZKKgP1&amp;from=timeline&amp;isappinstalled=0#wechat_redirect" target="_blank" rel="external">算法与数学之美</a></li>
+<li></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;关于机器学习中的一些采样方法&lt;br&gt;
+    
+    </summary>
+    
+      <category term="machine learning" scheme="http://yoursite.com/categories/machine-learning/"/>
+    
+    
+      <category term="pattern recognition" scheme="http://yoursite.com/tags/pattern-recognition/"/>
+    
+      <category term="machine learning，notes" scheme="http://yoursite.com/tags/machine-learning%EF%BC%8Cnotes/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>hexo 搭建博客</title>
+    <link href="http://yoursite.com/2016/08/13/hexo-%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://yoursite.com/2016/08/13/hexo-搭建博客/</id>
+    <published>2016-08-12T16:09:28.000Z</published>
+    <updated>2016-08-12T16:18:50.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>hexo 搭建博客笔记</p>
+<a id="more"></a>
+<p>搭建系统Mac。 Ps：Window 类似</p>
+<h1 id="一、软件安装与配置"><a href="#一、软件安装与配置" class="headerlink" title="一、软件安装与配置"></a>一、软件安装与配置</h1><h1 id="二、主题个性设置"><a href="#二、主题个性设置" class="headerlink" title="二、主题个性设置"></a>二、主题个性设置</h1><h1 id="三、博客撰写markdown"><a href="#三、博客撰写markdown" class="headerlink" title="三、博客撰写markdown"></a>三、博客撰写markdown</h1>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;hexo 搭建博客笔记&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="hexo" scheme="http://yoursite.com/categories/hexo/"/>
+    
+    
+      <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
+    
+      <category term="notes" scheme="http://yoursite.com/tags/notes/"/>
+    
+  </entry>
   
   <entry>
     <title>Hello World</title>
