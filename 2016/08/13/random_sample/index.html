@@ -17,16 +17,16 @@
 <meta property="og:url" content="http://yoursite.com/2016/08/13/random_sample/index.html">
 <meta property="og:site_name" content="Wenzheng Hu">
 <meta property="og:description" content="关于机器学习中的一些采样方法">
-<meta property="og:image" content="http://yoursite.com/reject_sampling.png">
-<meta property="og:image" content="http://yoursite.com/./mdJPG/Alg_MCMC.png">
-<meta property="og:image" content="http://yoursite.com/Alg_Metropolis Hastings.png">
-<meta property="og:image" content="http://yoursite.com/Gibbs_2.png">
-<meta property="og:image" content="http://yoursite.com/Gibbs_n.png">
-<meta property="og:updated_time" content="2017-03-04T15:52:40.000Z">
+<meta property="og:image" content="http://yoursite.com/img/reject_sampling.png">
+<meta property="og:image" content="http://yoursite.com/img/Alg_MCMC.png">
+<meta property="og:image" content="http://yoursite.com/img/Alg_Metropolis Hastings.png">
+<meta property="og:image" content="http://yoursite.com/img/Gibbs_2.png">
+<meta property="og:image" content="http://yoursite.com/img/Gibbs_n.png">
+<meta property="og:updated_time" content="2017-03-04T16:33:53.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="随机采样方法">
 <meta name="twitter:description" content="关于机器学习中的一些采样方法">
-<meta name="twitter:image" content="http://yoursite.com/reject_sampling.png">
+<meta name="twitter:image" content="http://yoursite.com/img/reject_sampling.png">
 
     
     <link rel="alternative" href="/atom.xml" title="Wenzheng Hu" type="application/atom+xml">
@@ -112,21 +112,50 @@
 		<p>关于机器学习中的一些采样方法<br><a id="more"></a></p>
 <h1 id="随机采样（Sampling）"><a href="#随机采样（Sampling）" class="headerlink" title="随机采样（Sampling）"></a>随机采样（Sampling）</h1><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
 
-<font size="4"><br>对于均匀分布的数据是很容易采样的，计算机中利用同余发生器能较好的产生均匀分布的伪随机数。<br><br>假设随机变量z~uniform(0,1),随机变量y与z有函数关系y=f(z),那么y的概率密度函数p(y)可由p(z)及f得到：<br><br>$$p(y)=p(z)|\frac{dz}{dy}|$$<br><br>$$z=h(y)=\int_{-\infty}^{y}{p(\widehat{y})d\widehat{y}}$$<br><br><strong>比如：</strong>\(y=-\lambda^{-1}ln(1-z)\),则y~exp(\(\lambda\))。所以，假如需要采样某个指数分布，则可以通过采样（0，1）均匀分布，然后利用函数关系式的到对应指数分布的采样。<br><br>[<strong>Box-Muller 变换</strong>]如果 \(U_1,U_2\)~Uniform(0,1),且独立，对于\(Z_0,Z<em>1\)若满足<br><br>$$Z</em>{0}=\sqrt{-2ln(U_1)}cos(2\pi U<em>2)$$<br><br>$$Z</em>{1}=\sqrt{-2ln(U_1)}sin(2\pi U_2)$$<br><br>则\(Z_0,Z_1\)～N(0,1)<br><br>PS：<font color="red">任意一个分布，其累积概率密度函数服从（0，1）均匀分布</font>
-
+<p>对于均匀分布的数据是很容易采样的，计算机中利用同余发生器能较好的产生均匀分布的伪随机数。</p>
+<p>假设随机变量z~uniform(0,1),随机变量y与z有函数关系y=f(z),那么y的概率密度函数p(y)可由p(z)及f得到：</p>
+<p>$$p(y)=p(z)|\frac{dz}{dy}|$$<br>$$z=h(y)=\int_{-\infty}^{y}{p(\widehat{y})d\widehat{y}}$$</p>
+<p><strong>比如：</strong>\(y=-\lambda^{-1}ln(1-z)\),则y~exp(\(\lambda\))。所以，假如需要采样某个指数分布，则可以通过采样（0，1）均匀分布，然后利用函数关系式的到对应指数分布的采样。</p>
+<p>[<strong>Box-Muller 变换</strong>]如果 \(U_1,U_2\)~Uniform(0,1),且独立，对于\(Z_0,Z_1\)若满足</p>
+<p>$$Z_{0}=\sqrt{-2ln(U_1)}cos(2\pi U_2)$$</p>
+<p>$$Z_{1}=\sqrt{-2ln(U_1)}sin(2\pi U_2)$$</p>
+<p>则\(Z_0,Z_1\)～N(0,1)</p>
+<p>PS：<font color="red">任意一个分布，其累积概率密度函数服从（0，1）均匀分布</font></p>
 <p><strong>对于大部分已知常见的分布基本都有相应的变换方式可以获取，但是对于某些复杂的分布则需要采用特殊的采样方式。</strong></p>
-<p></p></font><p></p>
-<h2 id="一、拒绝采样（Reject-sampling）"><a href="#一、拒绝采样（Reject-sampling）" class="headerlink" title="一、拒绝采样（Reject sampling）"></a>一、拒绝采样（Reject sampling）</h2><p><img src="reject_sampling.png" alt="reject_sampling"></p>
-<font size="4"><br><br>\(\widetilde{p}(z)\)是我们需要采样的分布，q(z)是某个我们能够简单采样的分布（比如高斯分布），k是某个常数。<br><br>已知\(kq(z)\ge \widetilde{p}(z)\),采样过程如下：<br><br><em> 从q(z)分布中采样\(z_0\)
-</em> 从均匀分布(0,\(kq(z_0)\)))采样某个随机数u<br><em> 如果\(u\gt \widetilde{p}(z_0)\),则拒绝该采样结果，否则接收
-</em> 重复上述过程，最后的到的采样样本则近似满足所需分布。<br><br>直观上\(\widetilde{p}(z)\)与kq(z)的值差距越大，则对应点被采样到的可能性就越小。<br><br>高维情况下，拒绝采样会遇到两个问题：其一是q分布的确定，其二是k的合理选择，这两个问题会导致拒绝很高，无用计算很多。<br><br></font>
-
-<h2 id="二、重要性采样（Importance-sampling）"><a href="#二、重要性采样（Importance-sampling）" class="headerlink" title="二、重要性采样（Importance sampling）"></a>二、重要性采样（Importance sampling）</h2><font size="4"><br><br><br></font>
-
-<h2 id="三、MCMC采样（Markov-Chain-Monte-Carlo）"><a href="#三、MCMC采样（Markov-Chain-Monte-Carlo）" class="headerlink" title="三、MCMC采样（Markov Chain Monte Carlo）"></a>三、MCMC采样（Markov Chain Monte Carlo）</h2><font size="4"><br>MCMC 是一种普适性的采样方法，能够采样许多的分布，并且适合高维数据分布的采样。MCMC 是基于马尔可夫链，首先说一点马尔可夫链的性质（更详细的马尔可夫链可以查阅相关资料）。<br><br>1. 什么叫做马尔科夫链？<br><br>    记状态空间\(S=\{i_0,i<em>1,…\}\),若<br><br>    $$P\{X\</em>{n+1} = i_{n+1} | X_0=i_0,X_1=i_1,…,X_n=i<em>n\} = P\{X\</em>{n+1} | X_n=i_n\}$$<br><br>    则称\(X_0,X_1,…\) 为<strong>马尔可夫链</strong>。<br>2. 平稳分布：某一个状态\(\pi\),经过状态转移矩阵变换后仍是该状态。即\(\pi = \pi P\),P为状态转移矩阵。<br>3. 有限不可约非周期的马尔可夫链存在惟一的平稳分布。<br><br>    <strong>相通：</strong> 从状态i出发，能够到达状态j，且从状态j出发也能到达状态i，则称i，j相通。<br><br>    <strong>不可约</strong>：若状态集合S的所有状态是相通的，则状态集合S不可约。<br><br>4. 周期和有限顾名思义。<br>5. 存在惟一平稳分布的马尔可夫链，无论初始为何，经过足够步数的变换一定会收敛到平稳分布。<br><br><br>马尔可夫链平稳分布的意义在于告诉我们，无论从怎样一个初始状态开始，经过若干步转移后会收敛到该马尔可夫链的平稳分布。<br><br>此处我们从离散分布角度出发，更容易地理解MCMC。<br><font color="blue"><strong>如果把平稳分布理解成我们需要采样的分布，待采样的点就是各个状态值。初始时假如视为均匀分布，经过若干次马氏转移后理应收敛到平稳分布，那么初始时采样的某个点经过同样多次的马氏状态变换后则对应平稳分布上的一个采样点。</strong></font>
+<h2 id="一、拒绝采样（Reject-sampling）"><a href="#一、拒绝采样（Reject-sampling）" class="headerlink" title="一、拒绝采样（Reject sampling）"></a>一、拒绝采样（Reject sampling）</h2><p><img src="/img/reject_sampling.png" alt="reject_sampling"></p>
+<p>\(\widetilde{p}(z)\)是我们需要采样的分布，q(z)是某个我们能够简单采样的分布（比如高斯分布），k是某个常数。</p>
+<p>已知\(kq(z)\ge \widetilde{p}(z)\),采样过程如下：</p>
+<ul>
+<li>从q(z)分布中采样\(z_0\)</li>
+<li>从均匀分布(0,\(kq(z_0)\)))采样某个随机数u</li>
+<li>如果\(u\gt \widetilde{p}(z_0)\),则拒绝该采样结果，否则接收</li>
+<li>重复上述过程，最后的到的采样样本则近似满足所需分布。</li>
+</ul>
+<p>直观上\(\widetilde{p}(z)\)与kq(z)的值差距越大，则对应点被采样到的可能性就越小。</p>
+<p>高维情况下，拒绝采样会遇到两个问题：其一是q分布的确定，其二是k的合理选择，这两个问题会导致拒绝很高，无用计算很多。</p>
+<h2 id="二、重要性采样（Importance-sampling）"><a href="#二、重要性采样（Importance-sampling）" class="headerlink" title="二、重要性采样（Importance sampling）"></a>二、重要性采样（Importance sampling）</h2><h2 id="三、MCMC采样（Markov-Chain-Monte-Carlo）"><a href="#三、MCMC采样（Markov-Chain-Monte-Carlo）" class="headerlink" title="三、MCMC采样（Markov Chain Monte Carlo）"></a>三、MCMC采样（Markov Chain Monte Carlo）</h2><p>MCMC 是一种普适性的采样方法，能够采样许多的分布，并且适合高维数据分布的采样。MCMC 是基于马尔可夫链，首先说一点马尔可夫链的性质（更详细的马尔可夫链可以查阅相关资料）。</p>
+<ol>
+<li>什么叫做马尔科夫链？</li>
+</ol>
+<p>记状态空间\(S=\{i_0,i_1,…\}\),若    </p>
+<p>$$P\{X_{n+1} = i_{n+1} | X_{0}=i_{0},X_{1}=i_{1},…,X_{n}=i_{n}\} = P\{X_{n+1} =i _{n+1} | X_{n}=i_{n}\}$$</p>
+<p>则称\(X_0,X_1,…\) 为<strong>马尔可夫链</strong>。</p>
+<ol>
+<li>平稳分布：某一个状态\(\pi\),经过状态转移矩阵变换后仍是该状态。即\(\pi = \pi P\),P为状态转移矩阵。</li>
+<li><p>有限不可约非周期的马尔可夫链存在惟一的平稳分布。</p>
+<p> <strong>相通：</strong> 从状态i出发，能够到达状态j，且从状态j出发也能到达状态i，则称i，j相通。</p>
+<p> <strong>不可约</strong>：若状态集合S的所有状态是相通的，则状态集合S不可约。</p>
+</li>
+<li><p>周期和有限顾名思义。</p>
+</li>
+<li>存在惟一平稳分布的马尔可夫链，无论初始为何，经过足够步数的变换一定会收敛到平稳分布。</li>
+</ol>
+<p>马尔可夫链平稳分布的意义在于告诉我们，无论从怎样一个初始状态开始，经过若干步转移后会收敛到该马尔可夫链的平稳分布。</p>
+<p>此处我们从离散分布角度出发，更容易地理解MCMC。</p>
+<font color="blue"><strong>如果把平稳分布理解成我们需要采样的分布，待采样的点就是各个状态值。初始时假如视为均匀分布，经过若干次马氏转移后理应收敛到平稳分布，那么初始时采样的某个点经过同样多次的马氏状态变换后则对应平稳分布上的一个采样点。</strong></font>
 
 <p>接下来就是如何寻找一个合适的转移矩阵，使得其平稳分布恰好是我们需要采样的概率分布？</p>
-<p>［<strong>细致平稳条件</strong>］如果非周期马氏转移矩阵P和分布\(\pi (x)\) 满足如下条件：<br>$$\pi (i)P<em>{ij} = \pi (j) P\</em>{ji}$$</p>
+<p>［<strong>细致平稳条件</strong>］如果非周期马氏转移矩阵P和分布\(\pi (x)\) 满足如下条件：<br>$$\pi (i)P_{ij} = \pi (j) P_{ji}$$</p>
 <p>则\(\pi (x)\)是P的平稳分布。</p>
 <p>直观理解就是：从状态i变成状态j的可能性和从状态j变成状态i的可能性一样，彼此抵消。</p>
 <p>假设我们有某一马氏转移矩阵Q，和待采样分布p，通常情况下</p>
@@ -136,13 +165,19 @@
 <p>此时\(q_{ij} \alpha _{ij}\) 组成的新的转移矩阵\(\widetilde{Q}\),则满足我们的希望————平稳分布即是待采样的分布。</p>
 <p>一种简单的获取\(\alpha\)的方式即是令</p>
 <p>$$\alpha _{ij} = p(j)q_{ji}$$</p>
-<p>所以MCMC的流程大致如下所示：<br><img src="./mdJPG/Alg_MCMC.png" alt="MCMC"></p>
+<p>所以MCMC的流程大致如下所示：<br><img src="/img/Alg_MCMC.png" alt="MCMC"></p>
 <p>由于    \(\alpha _{ij} = p(j)q_{ji}\)可能很小，从而导致大量的拒绝，转移变换需要很久。一种改进就是同比例的放大\(p(i)q_{ij} \alpha _{ij} ＝ p(j)q_{ji} \alpha _{ji}\)中的\(\alpha\)，不影响等式，所以令</p>
 <p>$$\alpha _{ij} = min\{\frac{p(j)q_{ji}}{p(i)q_{ij}},1\}$$</p>
-<p>于是演变成常用的MCMC算法————Metropolis Hastings<br><img src="Alg_Metropolis Hastings.png" alt="Metropolis"></p>
-<p></p></font><p></p>
-<h2 id="四、Gibbs采样-Gibbs-sampling"><a href="#四、Gibbs采样-Gibbs-sampling" class="headerlink" title="四、Gibbs采样(Gibbs sampling)"></a>四、Gibbs采样(Gibbs sampling)</h2><font size="4"><br>Gibbs 采样(Geman and Geman,1984) 是一种简单而广泛应用的MCMC算法，可以看作是Metropolis Hastings 的一个特例。<br><br>看二维分布\(p(x,y)\),考察二维两个同横坐标的点\(A(x_1,y_1),B(x_1,y_2)\)<br><br>$$p(x_1,y_1)p(y_2|x_1)=p(x_1)p(y_1|x_1)p(y_2|x_1)$$<br><br>$$p(x_1,y_2)p(y_1|x_1)=p(x_1)p(y_2|x_1)p(y_1|x_1)$$<br><br>所以有<br><br>$$p(x_1,y_1)p(y_2|x_1)=p(x_1,y_2)p(y_1|x_1)$$<br><br>对于同纵坐标的两点同理。<br><br>构造转移矩阵Q，使得<br><br>$$Q(A \rightarrow B) = p(y_B|x_1) \quad if \quad x_A=x_B=x_1$$<br><br>$$Q(A \rightarrow C) = p(x_C|y_1) \quad if \quad y_A=y_C=y_1$$<br><br>$$Q(A \rightarrow D) = 0 \quad others $$<br><br>那么此时任意两点X，Y满足<br><br>$$p(X)Q(X \rightarrow Y) = p(Y)Q(Y \rightarrow X)$$<br><br>所以相当于每次沿着某一个方向进行状态转移<br><br><img src="Gibbs_2.png" alt="Gibbs_2"><br><br>对于多维Gibbs类似<br><br><img src="Gibbs_n.png" alt="Gibbs_n"><br><br></font>
-
+<p>于是演变成常用的MCMC算法————Metropolis Hastings<br><img src="/img/Alg_Metropolis Hastings.png" alt="Metropolis"></p>
+<h2 id="四、Gibbs采样-Gibbs-sampling"><a href="#四、Gibbs采样-Gibbs-sampling" class="headerlink" title="四、Gibbs采样(Gibbs sampling)"></a>四、Gibbs采样(Gibbs sampling)</h2><p>Gibbs 采样(Geman and Geman,1984) 是一种简单而广泛应用的MCMC算法，可以看作是Metropolis Hastings 的一个特例。</p>
+<p>看二维分布\(p(x,y)\),考察二维两个同横坐标的点\(A(x_1,y_1),B(x_1,y_2)\)<br>$$p(x_1,y_1)p(y_2|x_1)=p(x_1)p(y_1|x_1)p(y_2|x_1)$$<br>$$p(x_1,y_2)p(y_1|x_1)=p(x_1)p(y_2|x_1)p(y_1|x_1)$$<br>所以有<br>$$p(x_1,y_1)p(y_2|x_1)=p(x_1,y_2)p(y_1|x_1)$$</p>
+<p>对于同纵坐标的两点同理。</p>
+<p>构造转移矩阵Q，使得<br>$$Q(A \rightarrow B) = p(y_B|x_1) \quad if \quad x_A=x_B=x_1$$<br>$$Q(A \rightarrow C) = p(x_C|y_1) \quad if \quad y_A=y_C=y_1$$<br>$$Q(A \rightarrow D) = 0 \quad others $$</p>
+<p>那么此时任意两点X，Y满足</p>
+<p>$$p(X)Q(X \rightarrow Y) = p(Y)Q(Y \rightarrow X)$$</p>
+<p>所以相当于每次沿着某一个方向进行状态转移</p>
+<p><img src="/img/Gibbs_2.png" alt="Gibbs_2"></p>
+<p>对于多维Gibbs类似<br><img src="/img/Gibbs_n.png" alt="Gibbs_n"></p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h2><ul>
 <li>《PRML》</li>
 <li><a href="http://mp.weixin.qq.com/s?__biz=MzA5ODUxOTA5Mg==&amp;mid=2652549929&amp;idx=1&amp;sn=b774997faf139ddba296cdc1cb171d81&amp;scene=2&amp;srcid=0812Gcot4umIh53aGHZKKgP1&amp;from=timeline&amp;isappinstalled=0#wechat_redirect" target="_blank" rel="external">算法与数学之美</a></li>
@@ -183,14 +218,6 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/08/13/随机采样方法/" title="随机采样方法">
-  <strong>上一篇：</strong><br/>
-  <span>
-  随机采样方法</span>
-</a>
-</div>
-
 
 <div class="next">
 <a href="/2016/08/13/hexo_blog/"  title="hexo 搭建博客">
@@ -236,7 +263,7 @@
 		  
 		
 		  
-			<li><a href="/categories/machine-learning/" title="machine learning">machine learning<sup>2</sup></a></li>
+			<li><a href="/categories/machine-learning/" title="machine learning">machine learning<sup>1</sup></a></li>
 		  
 		
 		</ul>
@@ -249,10 +276,6 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/pattern-recognition/" title="pattern recognition">pattern recognition<sup>2</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
 			
 		
@@ -261,7 +284,7 @@
 			
 		
 			
-				<li><a href="/tags/machine-learning，notes/" title="machine learning，notes">machine learning，notes<sup>1</sup></a></li>
+				<li><a href="/tags/pattern-recognition/" title="pattern recognition">pattern recognition<sup>1</sup></a></li>
 			
 		
 			
