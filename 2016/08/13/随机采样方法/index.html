@@ -18,7 +18,7 @@
 <meta property="og:site_name" content="Wenzheng Hu">
 <meta property="og:description" content="关于机器学习中的一些采样方法">
 <meta property="og:image" content="http://yoursite.com/./mdJPG/reject_sampling.png">
-<meta property="og:updated_time" content="2016-08-13T13:54:20.000Z">
+<meta property="og:updated_time" content="2017-03-04T14:28:07.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="随机采样方法">
 <meta name="twitter:description" content="关于机器学习中的一些采样方法">
@@ -489,6 +489,9 @@ $(document).ready(function(){
 
 
 
+
+
+
 <!-- Analytics Begin -->
 
 
@@ -518,6 +521,35 @@ var _hmt = _hmt || [];
 
 <!-- MathJax Begin -->
 <!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 
 
 <!-- MathJax End -->

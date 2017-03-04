@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-08-13T13:54:20.000Z</updated>
+  <updated>2017-03-04T14:28:07.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2016/08/13/%E9%9A%8F%E6%9C%BA%E9%87%87%E6%A0%B7%E6%96%B9%E6%B3%95/"/>
     <id>http://yoursite.com/2016/08/13/随机采样方法/</id>
     <published>2016-08-13T14:00:00.000Z</published>
-    <updated>2016-08-13T13:54:20.000Z</updated>
+    <updated>2017-03-04T14:28:07.000Z</updated>
     
     <content type="html"><![CDATA[<p>关于机器学习中的一些采样方法<br><a id="more"></a></p>
 <h2 id="随机采样（Sampling）"><a href="#随机采样（Sampling）" class="headerlink" title="随机采样（Sampling）"></a>随机采样（Sampling）</h2><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
